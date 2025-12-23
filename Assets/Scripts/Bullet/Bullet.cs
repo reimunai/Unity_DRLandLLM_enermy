@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private GameObject hitEffect;
     [SerializeField] private int damage = 1;
+    [SerializeField] private string selfTag;
+    [SerializeField] private string hitTag;
     
     void Start()
     {
@@ -16,13 +18,14 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         // 检查碰撞对象
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag(hitTag) && !collision.CompareTag(selfTag))
         {
+            Debug.Log("Aa");
             // 对敌人造成伤害
-            Enemy enemy = collision.GetComponent<Enemy>();
-            if (enemy != null)
+            var healthInteractor = collision.GetComponent<HealthInteractor>();
+            if (healthInteractor != null)
             {
-                enemy.TakeDamage(damage);
+                healthInteractor.TakeDamage(damage);
             }
             
             // 生成命中效果
@@ -50,5 +53,11 @@ public class Bullet : MonoBehaviour
     public void SetDamage(int newDamage)
     {
         damage = newDamage;
+    }
+
+    public void SetTag(string hit, string self)
+    {
+        selfTag = self;
+        hitTag = hit;
     }
 }

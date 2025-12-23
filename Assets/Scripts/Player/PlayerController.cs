@@ -118,6 +118,7 @@ public class PlayerController : MonoBehaviour
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript != null)
         {
+            bulletScript.SetTag("Enemy", transform.tag);
             bulletScript.SetDamage(damage);
         }
         
