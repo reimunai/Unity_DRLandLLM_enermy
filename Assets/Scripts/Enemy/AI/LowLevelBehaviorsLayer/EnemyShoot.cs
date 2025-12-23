@@ -26,7 +26,6 @@ public class EnemyShoot : MonoBehaviour
             _timer += Time.deltaTime;
         }
         
-        HandleShooting();
     }
 
     void HandleShooting()
