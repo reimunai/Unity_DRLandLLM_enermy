@@ -11,11 +11,13 @@ public class ChaseState : EnemyState
     
     private Transform currentTarget;
     private float repathTimer = 0f;
-    private float repathInterval = 0.3f; // 重新寻路间隔
+    private float repathInterval; // 重新寻路间隔
     private float lastKnownPositionTimer = 0f;
-    private float maxLostTargetTime = 3f; // 丢失目标后最多追踪时间
+    private float maxLostTargetTime; // 丢失目标后最多追踪时间
     private Vector2 lastKnownPosition;
     private bool hasTargetInSight = false;
+
+    private float chaseSpeed;
     
     public ChaseState(StrategyExecuter executer)
     {
@@ -24,6 +26,10 @@ public class ChaseState : EnemyState
         this.enemyFocus = executer.enemyFocus;
         this.enemyShoot = executer.GetComponent<EnemyShoot>();
         this.agent = executer.agent;
+        
+        this.chaseSpeed = executer.chaseSpeed;
+        this.repathInterval = executer.repathInterval;
+        this.maxLostTargetTime = executer.maxLostTargetTime;
     }
     
     public override void OnEnter()
@@ -34,7 +40,7 @@ public class ChaseState : EnemyState
         if (agent != null)
         {
             agent.isStopped = false;
-            agent.speed = 4f; // 追击时速度可以更快
+            agent.speed = chaseSpeed; // 追击时速度可以更快
         }
         
         // 初始化目标
