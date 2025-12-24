@@ -226,7 +226,7 @@ public class LLMPlanner : MonoBehaviour
         prompt.AppendLine("1. Idle - 保持静止，观察环境（当没有玩家可见或需要等待时机时）");
         prompt.AppendLine("2. GoTarget - 移动到指定坐标位置（需要提供目标位置）");
         prompt.AppendLine("3. Chase - 追逐最近的可见玩家（当玩家可见且距离较远时）");
-        prompt.AppendLine("4. Attack - 攻击目标玩家（当玩家在攻击范围内时）");
+        // prompt.AppendLine("4. Attack - 攻击目标玩家（当玩家在攻击范围内时）");
         prompt.AppendLine("5. Retreat - 撤退到安全位置（当生命值低或需要恢复时）");
         prompt.AppendLine();
         prompt.AppendLine("【决策要求】");

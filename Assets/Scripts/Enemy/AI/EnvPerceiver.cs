@@ -10,7 +10,7 @@ public class EnvPerceiver : MonoBehaviour
     [SerializeField] private float perceptionRadius = 15f;
     [SerializeField] private float perceptionAngle = 180f;
     [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] public LayerMask obstacleLayer;
     [SerializeField] private float perceptionInterval = 0.5f;
 
     [Header("状态监控")]
