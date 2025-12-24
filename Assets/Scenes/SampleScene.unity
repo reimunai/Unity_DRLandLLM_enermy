@@ -173,9 +173,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a950b739111934a9b0d963c3bb91ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 10
   currentHealth: 0
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamageTaken:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   deathEffect: {fileID: 0}
+--- !u!114 &256407754 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4626297528712325287, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+  m_PrefabInstance: {fileID: 1907356485}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256407738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b9defe97f4e6e44abec0685efd6590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &256407755 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1086048499096646695, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+  m_PrefabInstance: {fileID: 1907356485}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256407738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d740699fb5721a54ab37b0942851dbf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &256407760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256407738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e39f6090724e4a4a8aadeb042afa2bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +424,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   currentHealth: 0
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamageTaken:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   deathEffect: {fileID: 0}
 --- !u!1 &614653889
 GameObject:
@@ -395,7 +447,7 @@ GameObject:
   - component: {fileID: 614653893}
   - component: {fileID: 614653892}
   - component: {fileID: 614653894}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -626,6 +678,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &795682653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 795682655}
+  - component: {fileID: 795682654}
+  m_Layer: 0
+  m_Name: DeepseekManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &795682654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795682653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c47d5141330197041b5f0e325fb0c8af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiKey: sk-4ca9712e4c85409e95864dce63fcfa4b
+  apiUrl: https://api.deepseek.com/v1/chat/completions
+  initmessage: "\u4F60\u662F\u4E00\u4E2A\u6709\u5E2E\u52A9\u7684AI\u52A9\u624B"
+  conversationHistory: []
+--- !u!4 &795682655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795682653}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.111007, y: 3.5447948, z: 0.05236812}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1078312318
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,7 +739,7 @@ GameObject:
   - component: {fileID: 1078312322}
   - component: {fileID: 1078312321}
   - component: {fileID: 1078312323}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -838,9 +938,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3911816571368430960, guid: e558e391345ec7b4e8ace879ea9e9041, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5168470176511721631, guid: e558e391345ec7b4e8ace879ea9e9041, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5168470176511721631, guid: e558e391345ec7b4e8ace879ea9e9041, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6135549953545712994, guid: e558e391345ec7b4e8ace879ea9e9041, type: 3}
       propertyPath: m_BodyType
@@ -907,7 +1015,7 @@ GameObject:
   - component: {fileID: 1878228621}
   - component: {fileID: 1878228620}
   - component: {fileID: 1878228622}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -1070,6 +1178,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1086048499096646695, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+      propertyPath: perceptionAngle
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1086048499096646695, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+      propertyPath: perceptionRadius
+      value: 10.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1086048499096646695, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1086048499096646695, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1101484280221245783, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -1122,6 +1246,14 @@ PrefabInstance:
       propertyPath: m_AgentTypeID
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4935549686620224942, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+      propertyPath: envPerceiver
+      value: 
+      objectReference: {fileID: 256407755}
+    - target: {fileID: 4935549686620224942, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+      propertyPath: strategyExecuter
+      value: 
+      objectReference: {fileID: 256407754}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1129,6 +1261,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1101484280221245783, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 256407749}
+    - targetCorrespondingSourceObject: {fileID: 1101484280221245783, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 256407760}
   m_SourcePrefab: {fileID: 100100000, guid: 34ac2333bfc276d44a99b50053945c8d, type: 3}
 --- !u!1 &1915436640
 GameObject:
@@ -1143,7 +1278,7 @@ GameObject:
   - component: {fileID: 1915436644}
   - component: {fileID: 1915436643}
   - component: {fileID: 1915436645}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -1408,7 +1543,7 @@ GameObject:
   - component: {fileID: 1994448468}
   - component: {fileID: 1994448467}
   - component: {fileID: 1994448469}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -1569,3 +1704,4 @@ SceneRoots:
   - {fileID: 174558877}
   - {fileID: 549423689}
   - {fileID: 640922553}
+  - {fileID: 795682655}

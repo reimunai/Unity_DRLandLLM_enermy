@@ -45,6 +45,7 @@ public class StrategyExecuter : MonoBehaviour
 
     public void StrategyCommandHandler(LLMStrategyCommand strategyCommand)
     {
+        Debug.Log(strategyCommand);
         Debug.Log("Executing Strategy Command");
     }
 }
