@@ -7,20 +7,32 @@ using UnityEngine.AI;
 public class StrategyExecuter : MonoBehaviour
 {
     // Start is called before the first frame update
-    public NavMeshAgent agent;
     
     public EnemyState CurrentState;
-    [Header("AI Idle State")] 
+    
+    [Header("AI Wander State")] 
+    public NavMeshAgent agent;
     public float WanderRadius = 10f;
     public float MinWanderDelay = 2f;
     public float MaxWanderDelay = 5f;
     public float DestinationThreshold = 0.5f;
+
+    [Header("AI Idle State")] 
+    public EnemyFocus enemyFocus;
+    public float scansAngle = 45f;
+    public float scanSpeed = 90f; // 度/秒
+    public float scanStartDelay = 1f; // 开始扫描前的延迟
     
+    [Header("AI Chase State")]
+    public float chaseSpeed = 4f;
+    public float repathInterval = 0.3f;
+    public float maxLostTargetTime = 3f;
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-
-        var newState = new IdleState(this);
+        enemyFocus = GetComponent<EnemyFocus>();
+        
+        var newState = new ChaseState(this);
         ChangeCurrentState(newState);
     }
 

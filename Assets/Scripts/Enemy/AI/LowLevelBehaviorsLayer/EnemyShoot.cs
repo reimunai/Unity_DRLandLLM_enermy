@@ -22,7 +22,7 @@ public class EnemyShoot : MonoBehaviour
         }
     }
 
-    void HandleShooting()
+    public void HandleShooting()
     {
         if ( _timer >= fireRate)
         {
@@ -31,7 +31,7 @@ public class EnemyShoot : MonoBehaviour
         }
     }
     
-    void Shoot()
+    private void Shoot()
     {
         if (bulletPrefab == null || firePoint == null)
         {

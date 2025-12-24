@@ -10,9 +10,9 @@ public class EnemyFocus : MonoBehaviour
     public FocusMode focusMode = FocusMode.Normal;
     
     [Header("扫描设置")]
-    [SerializeField] private float _scansAngle = 45f;
-    [SerializeField] private float _scanSpeed = 90f; // 度/秒
-    [SerializeField] private float _scanStartDelay = 1f; // 开始扫描前的延迟
+    public float _scansAngle = 45f;
+    public float _scanSpeed = 90f; // 度/秒
+    public float _scanStartDelay = 1f; // 开始扫描前的延迟
     
     [Header("目标锁定设置")]
     [SerializeField] private float _rotationSpeed = 180f; // 度/秒
