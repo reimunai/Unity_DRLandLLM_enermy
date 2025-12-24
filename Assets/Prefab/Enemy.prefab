@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1045114878132163498}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0.84, y: -0.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,8 +47,11 @@ GameObject:
   - component: {fileID: 4626297528712325287}
   - component: {fileID: 4935549686620224942}
   - component: {fileID: 4711554054415300089}
-  - component: {fileID: 1426304430548699711}
   - component: {fileID: 7482441266536318738}
+  - component: {fileID: 3688923189670403405}
+  - component: {fileID: 1426304430548699711}
+  - component: {fileID: 664648273058356304}
+  - component: {fileID: 8616264943802347047}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -84,9 +87,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60a0c1d25341034493497d54fcfd8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
-  currentHealth: 0
-  deathEffect: {fileID: 0}
 --- !u!212 &6694784448654602447
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -199,6 +199,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d740699fb5721a54ab37b0942851dbf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  perceptionRadius: 10.9
+  perceptionAngle: 180
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  perceptionInterval: 0.5
+  healthInteractor: {fileID: 0}
+  selfTransform: {fileID: 0}
+  OnDamageTaken:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4626297528712325287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b9defe97f4e6e44abec0685efd6590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  WanderRadius: 10
+  MinWanderDelay: 2
+  MaxWanderDelay: 5
+  DestinationThreshold: 0.5
 --- !u!114 &4935549686620224942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,9 +243,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   callLlmTime: 10
+  useLLM: 0
+  debugMode: 1
   envContent: 
-  envPerceiver: {fileID: 0}
-  strategyExecuter: {fileID: 0}
+  envPerceiver: {fileID: 1086048499096646695}
+  strategyExecuter: {fileID: 4626297528712325287}
 --- !u!195 &4711554054415300089
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -249,23 +270,6 @@ NavMeshAgent:
   m_BaseOffset: 0.71133333
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1426304430548699711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1101484280221245783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc93a085c8fb2c24186eb0229931f7df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 717731491354552100, guid: 41586f44c32c13c4c81b9a7b0de860ab, type: 3}
-  firePoint: {fileID: 4551450277554464916}
-  fireRate: 0.2
-  bulletSpeed: 10
-  damage: 1
 --- !u!50 &7482441266536318738
 Rigidbody2D:
   serializedVersion: 4
@@ -293,3 +297,75 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
+--- !u!114 &3688923189670403405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101484280221245783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e39f6090724e4a4a8aadeb042afa2bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1426304430548699711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101484280221245783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc93a085c8fb2c24186eb0229931f7df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 717731491354552100, guid: 41586f44c32c13c4c81b9a7b0de860ab, type: 3}
+  firePoint: {fileID: 4551450277554464916}
+  fireRate: 0.2
+  bulletSpeed: 10
+  damage: 1
+--- !u!114 &664648273058356304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101484280221245783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a950b739111934a9b0d963c3bb91ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  currentHealth: 0
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamageTaken:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  deathEffect: {fileID: 0}
+--- !u!114 &8616264943802347047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101484280221245783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac06a97b43847644895dbd5dd1f3db30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusTarget: {fileID: 0}
+  focusPosition: {x: 0, y: 0}
+  focusMode: 0
+  _scansAngle: 30
+  _scanSpeed: 20
+  _scanStartDelay: 1
+  _rotationSpeed: 180

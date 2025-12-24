@@ -13,11 +13,6 @@ public class EnemyShoot : MonoBehaviour
     
     private float _timer = 0f;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +20,6 @@ public class EnemyShoot : MonoBehaviour
         {
             _timer += Time.deltaTime;
         }
-        
     }
 
     void HandleShooting()
@@ -53,7 +47,7 @@ public class EnemyShoot : MonoBehaviour
         if (bulletRb != null)
         {
             // 设置子弹速度（朝向前方）
-            bulletRb.velocity = bullet.transform.up * bulletSpeed;
+            bulletRb.velocity = bullet.transform.right * bulletSpeed;
         }
         
         // 设置子弹伤害
