@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
         // 检查碰撞对象
         if (collision.CompareTag(hitTag) && !collision.CompareTag(selfTag))
         {
-            Debug.Log("Aa");
+            // Debug.Log("Aa");
             // 对敌人造成伤害
             var healthInteractor = collision.GetComponent<HealthInteractor>();
             if (healthInteractor != null)

@@ -30,7 +30,7 @@ public class StrategyExecuter : MonoBehaviour
     
     [Header("AI Retreat State")]
     public float retreatSpeed = 5f;
-    public float retreatDistance = 15f;
+    public float retreatDistance = 20f;
     public float minRetreatDistance = 8f;
     public float maxRetreatTime = 10f;
 
@@ -53,7 +53,9 @@ public class StrategyExecuter : MonoBehaviour
     }
 
     private void ChangeCurrentState(EnemyState newState)
-    {
+    {   
+        if(CurrentState == newState)
+            return;
         if (CurrentState != null)
         {
             CurrentState.OnExit();
@@ -93,6 +95,7 @@ public class StrategyExecuter : MonoBehaviour
                         strategyCommand.TargetPosition.y,
                         0
                     );
+                    agent.ResetPath();
                     agent.SetDestination(targetPos);
                     Debug.Log($"前往: {targetPos}");
                 }

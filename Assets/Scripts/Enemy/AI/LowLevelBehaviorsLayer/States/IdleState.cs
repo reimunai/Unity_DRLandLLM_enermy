@@ -13,8 +13,8 @@ public class IdleState : EnemyState
     public IdleState(StrategyExecuter strategyExecuter)
     {
         _enemyFocus = strategyExecuter.enemyFocus;
-        _preScanSpeed = _enemyFocus._scansAngle = strategyExecuter.scansAngle;
-        _preScanAngle = _enemyFocus._scanSpeed = strategyExecuter.scanSpeed;
+        _preScanSpeed = _enemyFocus._scanSpeed = strategyExecuter.scanSpeed;
+        _preScanAngle = _enemyFocus._scansAngle = strategyExecuter.scansAngle; 
         _preScanStartDelay = _enemyFocus._scanStartDelay = strategyExecuter.scanStartDelay;
     }
     public override void OnEnter()

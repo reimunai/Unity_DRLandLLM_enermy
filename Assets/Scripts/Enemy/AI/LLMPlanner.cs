@@ -145,7 +145,8 @@ public class LLMPlanner : MonoBehaviour
         OnStrategyCommand?.AddListener(strategyExecuter.StrategyCommandHandler);
 
         // 初始化系统提示词
-        InitializeSystemPrompt();
+        CallLlmForStrategy();
+
     }
 
     private void Update()
@@ -155,25 +156,10 @@ public class LLMPlanner : MonoBehaviour
         {
             envContent = envPerceiver.PackageEnvContent();
             Debug.Log(envContent);
-            CallForStrategy();
+            CallLlmForStrategy();
             _timer = 0;
         }
     }
-
-    private void CallForStrategy()
-    {
-        if (useLLM && DeepSeekChatManager.Instance != null)
-        {
-            Debug.Log("CallForStrategy");
-            CallLlmForStrategy();
-        }
-        else
-        {
-            // 使用传统算法作为后备
-            //UseTraditionalAI();
-        }
-    }
-
     private void InitializeSystemPrompt()
     {
         // 可以在这里初始化系统提示词
@@ -183,15 +169,25 @@ public class LLMPlanner : MonoBehaviour
 1. 你是游戏中的敌人，目标是击败玩家
 2. 你有多种行动选择：待机、移动、追击、攻击、撤退
 3. 需要考虑自身血量、玩家位置、距离等因素
+4. 地图大小为x（-15，15）y（-10，10）
 
 请用JSON格式返回决策，确保格式正确。";
-
+        DeepSeekChatManager.Instance.SendMessage(
+            systemPrompt,
+            OnLLMResponse,
+            OnLLMError
+        );
         // 如果需要，可以在这里设置系统消息
         // DeepSeekChatManager.Instance?.SetSystemPrompt(systemPrompt);
     }
 
     private void CallLlmForStrategy()
     {
+        if (!useLLM && DeepSeekChatManager.Instance == null)
+        { 
+            Debug.Log("调用失败");
+            return;
+        } 
         if (_isProcessing) return;
 
         _isProcessing = true;
@@ -212,42 +208,24 @@ public class LLMPlanner : MonoBehaviour
         );
     }
 
-    private string ConstructLLMPrompt()
-    {
-        StringBuilder prompt = new StringBuilder();
-
-        prompt.AppendLine("请根据以下游戏环境信息，为我选择一个合适的行动策略。");
-        prompt.AppendLine("请仔细分析环境状态，做出明智的决策。");
-        prompt.AppendLine();
-        prompt.AppendLine("【当前环境信息】");
-        prompt.AppendLine(envContent);
-        prompt.AppendLine();
-        prompt.AppendLine("【可选行动】");
-        prompt.AppendLine("1. Idle - 保持静止，观察环境（当没有玩家可见或需要等待时机时）");
-        prompt.AppendLine("2. GoTarget - 移动到指定坐标位置（需要提供目标位置）");
-        prompt.AppendLine("3. Chase - 追逐最近的可见玩家（当玩家可见且距离较远时）");
-        // prompt.AppendLine("4. Attack - 攻击目标玩家（当玩家在攻击范围内时）");
-        prompt.AppendLine("5. Retreat - 撤退到安全位置（当生命值低或需要恢复时）");
-        prompt.AppendLine();
-        prompt.AppendLine("【决策要求】");
-        prompt.AppendLine("- 根据当前情况选择最合适的行动");
-        prompt.AppendLine("- 说明选择该行动的理由");
-        prompt.AppendLine("- 如果需要移动或撤退，请提供具体的目标位置坐标");
-        prompt.AppendLine("- 优先考虑生存，生命值低于30%时应考虑撤退");
-        prompt.AppendLine("- 有可见玩家时优先考虑攻击或追击");
-        prompt.AppendLine();
-        prompt.AppendLine("请以严格的JSON格式返回决策，格式如下：");
-        prompt.AppendLine("{");
-        prompt.AppendLine("  \"action\": \"行动名称\",");
-        prompt.AppendLine("  \"reason\": \"你的决策理由，详细说明为什么选择这个行动\",");
-        prompt.AppendLine("  \"target_position\": {\"x\": 0.0, \"y\": 0.0},");
-        prompt.AppendLine("  \"priority\": 1");
-        prompt.AppendLine("}");
-        prompt.AppendLine();
-        prompt.AppendLine("注意：行动名称必须精确匹配上述可选行动的名称。");
-
-        return prompt.ToString();
-    }
+private string ConstructLLMPrompt()
+{
+    // 简化提示词，减少不必要的说明
+    StringBuilder prompt = new StringBuilder();
+    
+    prompt.AppendLine("基于环境信息选择行动。");
+    prompt.AppendLine("环境:");
+    prompt.AppendLine(envContent);
+    prompt.AppendLine();
+    prompt.AppendLine("行动: Idle, GoTarget, Chase, Retreat"); 
+    prompt.AppendLine("- 如果需要移动或撤退，请提供具体的目标位置坐标");
+    prompt.AppendLine("- 优先考虑生存，生命值低于30%时应考虑撤退");
+    prompt.AppendLine("- 有可见玩家时优先考虑攻击或追击");
+    prompt.AppendLine("返回JSON格式:");
+    prompt.AppendLine("{\"action\": \"行动\", \"reason\": \"简要理由\", \"target_position\": {\"x\":0,\"y\":0}}");
+    
+    return prompt.ToString();
+}
 
     private void OnLLMResponse(string response)
     {
@@ -392,7 +370,9 @@ public class LLMPlanner : MonoBehaviour
                 {
                     command.TargetObject = nearestPlayer.playerTransform;
                 }
-                break;
+                else
+                    Debug.Log("没找到玩家");
+                    break;
             case "attack":
                 command.Action = ActionType.Attack;
                 // 设置最近的玩家为目标

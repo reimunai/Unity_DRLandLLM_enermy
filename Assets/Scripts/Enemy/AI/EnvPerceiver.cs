@@ -182,7 +182,7 @@ public class EnvPerceiver : MonoBehaviour
         envDescription.AppendLine("\n【环境特征】");
         envDescription.AppendLine($"- 感知半径: {perceptionRadius}米");
         envDescription.AppendLine($"- 视野角度: {perceptionAngle}度");
-
+        envDescription.AppendLine($"- 游戏地图大小：x（-15，15）y（-10，10）"); 
         return envDescription.ToString();
     }
 
